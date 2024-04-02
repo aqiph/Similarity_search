@@ -15,8 +15,4 @@ utils/.idea/
 */.ipynb_checkpoints/*
 
 # Others
-cluster_analysis/tests/
-diversity_analysis/tests/
-SMILES_processing/tests/
-SMILESto3DCoord/tests/
-similarity_search/tests/
+tests/
