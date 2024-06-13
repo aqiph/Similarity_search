@@ -82,7 +82,7 @@ def is_similar_by_substructure(smiles, smiles_sub, substructure_method='SMILES')
     if substructure_method == 'SMILES':
         mol_sub = Chem.MolFromSmiles(smiles_sub)
     elif substructure_method == 'SMARTS':
-        smiles_sub = Chem.MolToSmiles(Chem.MolFromSmiles(smiles_sub))   # Kekulize molecule before get mol as a pattern
+        smiles_sub = Chem.MolToSmiles(Chem.MolFromSmiles(smiles_sub))   # Change molecule before get mol as a pattern, not using the Kekule form
         # print(smiles_sub)
         mol_sub = Chem.MolFromSmarts(smiles_sub)
     else:
