@@ -23,10 +23,10 @@ from rdkit.Chem import rdFMCS
 
 
 
-def get_fingerprint(smiles, fp_method = 'ecfp4'):
+def get_fingerprint(mol, fp_method = 'ecfp4'):
     """
     Compute the fingerprint of the input smiles
-    :param smiles: str, input SMILES
+    :param mol: RDKit Mol object
     :param fp_method: str, method to compute fingerprint (topology: topological fingerprint;
                                                          maccs: MACCS fingerprint;
                                                          atomPairs: atom pairs;
@@ -36,17 +36,17 @@ def get_fingerprint(smiles, fp_method = 'ecfp4'):
                                                          mhfp6: MinHash fingerprint
     :return: fingerprint object, list, or None
     """
-    # check if SMILES is valid
-    if not smiles:
-        print(f"Error: Invalid SMILES {smiles}")
-        return None
-    try:
-        mol = Chem.MolFromSmiles(smiles)
-    except Exception:
-        print(f"Error: Invalid SMILES {smiles}")
-        return None
+    # # check if SMILES is valid
+    # if not smiles:
+    #     print(f"Error: Invalid SMILES {smiles}")
+    #     return None
+    # try:
+    #     mol = Chem.MolFromSmiles(smiles)
+    # except Exception:
+    #     print(f"Error: Invalid SMILES {smiles}")
+    #     return None
     if not mol:
-        print(f"Error: Invalid SMILES {smiles}")
+        print(f"Error: Invalid SMILES")
         return None
     
     # calculate fingerprint
@@ -106,26 +106,26 @@ def cal_fingerprint_distance(fp_1, fp_2, fp_method = 'ecfp4'):
     return dist    
 
 
-def get_scaffold(smiles, include_chirality = False, generic = False):
+def get_scaffold(mol, include_chirality = False, generic = False):
     """
     Compute the Bemis-Murcko scaffold for a SMILES string
-    :param smiles: str, input SMILES
-    :param include_chirality: bool, whether or not using chirality
-    :param generic: bool, whether or not make the scaffold generic
+    :param mol: RDKit Mol object
+    :param include_chirality: bool, whether using chirality or not
+    :param generic: bool, whether making the scaffold generic or not
     (i.e., change all heavy atoms to the same one, ignore bond order)
     :return: str or None, SMILES of the BM scaffold
     """
-    # check if SMILES is valid
-    if not smiles:
-        print(f"Error: Invalid SMILES {smiles}")
-        return None
-    try:
-        mol = Chem.MolFromSmiles(smiles)
-    except Exception:
-        print(f"Error: Invalid SMILES {smiles}")
-        return None
+    # # check if SMILES is valid
+    # if not smiles:
+    #     print(f"Error: Invalid SMILES {smiles}")
+    #     return None
+    # try:
+    #     mol = Chem.MolFromSmiles(smiles)
+    # except Exception:
+    #     print(f"Error: Invalid SMILES {smiles}")
+    #     return None
     if not mol:
-        print(f"Error: Invalid SMILES {smiles}")
+        print(f"Error: Invalid SMILES")
         return None
     
     # calculate scaffold
@@ -138,25 +138,25 @@ def get_scaffold(smiles, include_chirality = False, generic = False):
     return scaffold_smiles
 
 
-def cal_MCS(smiles_1, smiles_2, match='exact'):
+def cal_MCS(mol_1, mol_2, match='exact'):
     """
     Compute the Maximum Common Sub-structure between two SMILES
     MCS similarity is defined as Jaccard score on heavy atoms, using the MCS as intersection.
     More details at https://www.rdkit.org/docs/source/rdkit.Chem.MCS.html
-    :param smiles_1: str, SMILES for molecule 1
-    :param smiles_2: str, SMILES for molecule 2
+    :param mol_1: RDKit Mol object for molecule 1
+    :param mol_2: RDKit Mol object for molecule 2
     :param match: str, specify 'match' to use different comparison functions, allowed values include 'exact', 'anyAtom'
     """
-    # check if SMILES is valid
-    if (not smiles_1) or (not smiles_2):
-        print(f"Error: Invalid SMILES")
-        return 0
-    try:
-        mol_1 = Chem.MolFromSmiles(smiles_1)
-        mol_2 = Chem.MolFromSmiles(smiles_2)
-    except Exception:
-        print(f"Error: Invalid SMILES")
-        return 0
+    # # check if SMILES is valid
+    # if (not smiles_1) or (not smiles_2):
+    #     print(f"Error: Invalid SMILES")
+    #     return 0
+    # try:
+    #     mol_1 = Chem.MolFromSmiles(smiles_1)
+    #     mol_2 = Chem.MolFromSmiles(smiles_2)
+    # except Exception:
+    #     print(f"Error: Invalid SMILES")
+    #     return 0
     if (not mol_1) or (not mol_2):
         print(f"Error: Invalid SMILES")
         return 0
@@ -174,20 +174,20 @@ def cal_MCS(smiles_1, smiles_2, match='exact'):
 
 
 ### Testing ###
-def get_MCS(smiles_1, smiles_2):
+def get_MCS(mol_1, mol_2):
     """
     Plot MCS
     """
-    # check if SMILES is valid
-    if (not smiles_1) or (not smiles_2):
-        print(f"Error: Invalid SMILES")
-        return 0
-    try:
-        mol_1 = Chem.MolFromSmiles(smiles_1)
-        mol_2 = Chem.MolFromSmiles(smiles_2)
-    except Exception:
-        print(f"Error: Invalid SMILES")
-        return 0
+    # # check if SMILES is valid
+    # if (not smiles_1) or (not smiles_2):
+    #     print(f"Error: Invalid SMILES")
+    #     return 0
+    # try:
+    #     mol_1 = Chem.MolFromSmiles(smiles_1)
+    #     mol_2 = Chem.MolFromSmiles(smiles_2)
+    # except Exception:
+    #     print(f"Error: Invalid SMILES")
+    #     return 0
     if (not mol_1) or (not mol_2):
         print(f"Error: Invalid SMILES")
         return 0
@@ -212,55 +212,42 @@ def get_MCS(smiles_1, smiles_2):
 if __name__ == '__main__':
 
     # import sys
-    #
     # path_list = sys.path
-    # module_path = '/Users/guohan/Documents/Code/Tool'
+    # module_path = '/Users/guohan/Documents/Codes/Molecule_Analysis'
     # if module_path not in sys.path:
     #     sys.path.append(module_path)
     #     print('Add module path')
-    #
-    # from process_SMILES import plot_2d_molecule_from_smiles
+    # from SMILES_processing import plot_2d_molecule_from_mol, plot_2d_molecule_from_smiles
 
-
-    ### test get_fingerprint
-    # smiles = 'Cc1cc(Oc2nccc(CCC)c2)ccc1'
-    # smiles = ''
-    # plot_2d_molecule_from_smiles(smiles, output_file_without_ext = 'original', legend = smiles, atomNumber = None)
-    # print(get_fingerprint(smiles, fp_method = 'MHFP6'))
-
-
-    ### test cal_fingerprint_distance
+    ### test get_fingerprint and cal_fingerprint_distance
     # smiles_1 = 'CCOC1=C(C=C(C=C1)S(=O)(=O)N(C)C)C2=NC(=O)C3=C(N2)C(=NN3C)C(C)(C)C'
     # smiles_2 = 'CCCC1=NN(C2=C1NC(=NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C'
-    # smiles_1 = 'CCO'
-    # smiles_2 = 'h'
-
     # for fp_method in ['topology', 'maccs', 'atompairs', 'torsions', 'ecfp4', 'fcfp4']:
-    #     fp_1 = get_fingerprint(smiles_1, fp_method = fp_method)
-    #     fp_2 = get_fingerprint(smiles_2, fp_method = fp_method)
+    #     mol_1, mol_2 = Chem.MolFromSmiles(smiles_1), Chem.MolFromSmiles(smiles_2)
+    #     fp_1 = get_fingerprint(mol_1, fp_method = fp_method)
+    #     fp_2 = get_fingerprint(mol_2, fp_method = fp_method)
     #     print(fp_method, cal_fingerprint_distance(fp_1, fp_2, fp_method = fp_method))
-
 
     ### test get_scaffold
     # smiles_1 = 'CCOC(=O)N1CCN(CC1)C1=CC=CC=C1NS(=O)(=O)C1=CC=C(C=C1)S(=O)(=O)N(C)C'
     # smiles_2 = 'COC(C)(C)C(=O)N1CCN(CC1)C1=C(NS(=O)(=O)C2=CC=C(C=C2)S(=O)(=O)N(C)C)C=CC=C1'
-    #
-    # plot_2d_molecule_from_smiles(smiles_1, output_file_without_ext = 'smiles_1_original', legend = 'smiles_1', atomNumber = None)
-    # plot_2d_molecule_from_smiles(smiles_2, output_file_without_ext = 'smiles_2_original', legend = 'smiles_2', atomNumber = None)
-    #
-    # scaffold_smiles_1 = get_scaffold(smiles_1, include_chirality=False, generic = False)
-    # scaffold_smiles_2 = get_scaffold(smiles_2, include_chirality=False, generic = False)
-    #
+    # mol_1, mol_2 = Chem.MolFromSmiles(smiles_1), Chem.MolFromSmiles(smiles_2)
+    # plot_2d_molecule_from_mol(mol_1, output_file_without_ext = 'smiles_1_original', legend = 'smiles_1', atomNumber = None)
+    # plot_2d_molecule_from_mol(mol_2, output_file_without_ext = 'smiles_2_original', legend = 'smiles_2', atomNumber = None)
+    # scaffold_smiles_1 = get_scaffold(mol_1, include_chirality=False, generic = False)
+    # scaffold_smiles_2 = get_scaffold(mol_2, include_chirality=False, generic = False)
     # plot_2d_molecule_from_smiles(scaffold_smiles_1, output_file_without_ext = 'smiles_1', legend = 'smiles_1', atomNumber = None)
     # plot_2d_molecule_from_smiles(scaffold_smiles_2, output_file_without_ext = 'smiles_2', legend = 'smiles_2', atomNumber = None)
 
     ### test cal_MCS
-    # smiles_1 = 'CCOC1=C(C=C(C=C1)S(=O)(=O)N(C)C)C2=NC(=O)C3=C(N2)C(=NN3C)C(C)(C)C'
-    # smiles_2 = 'CCCC1=NN(C2=C1NC(=NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C'
+    smiles_1 = 'CCOC1=C(C=C(C=C1)S(=O)(=O)N(C)C)C2=NC(=O)C3=C(N2)C(=NN3C)C(C)(C)C'
+    smiles_2 = 'CCCC1=NN(C2=C1NC(=NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C'
     # smiles_2 = 'CCOC1=C(C=C(C=C1)S(=O)(=O)N(C)C)C2=NC(=O)C3=C(N2)C(=NN3C)C(C)(C)C'
     # smiles_2 = ''
-    # print(cal_MCS(smiles_1, smiles_2))
+    mol_1, mol_2 = Chem.MolFromSmiles(smiles_1), Chem.MolFromSmiles(smiles_2)
+    print(cal_MCS(mol_1, mol_2))
 
-    smiles_1 = 'O=C(NC1(O)C(=O)C2=CC=CC=C2C1=O)C1=CC=C(C(F)(F)F)C=C1'
-    smiles_2 = 'C12(NC(=O)c3ccc(cc3)C)CC3CC(C1)CC(C3)CC2'
-    get_MCS(smiles_1, smiles_2)
+    # smiles_1 = 'O=C(NC1(O)C(=O)C2=CC=CC=C2C1=O)C1=CC=C(C(F)(F)F)C=C1'
+    # smiles_2 = 'C12(NC(=O)c3ccc(cc3)C)CC3CC(C1)CC(C3)CC2'
+    # mol_1, mol_2 = Chem.MolFromSmiles(smiles_1), Chem.MolFromSmiles(smiles_2)
+    # get_MCS(mol_1, mol_2)
