@@ -192,7 +192,7 @@ def similarity_search_multiple_query(input_file_library, input_file_query, metho
         df_sim = df_sim.reset_index(drop=True)
         print('Number of rows:', df_sim.shape[0])
         df_sim = remove_unnamed_columns(df_sim)
-        output_file = os.path.join(folder, f'{id_query}.csv')
+        output_file = os.path.join(folder, id_query)
         df_sim.to_csv(output_file + f'_{df_sim.shape[0]}.csv')
 
         end_time = time.time()

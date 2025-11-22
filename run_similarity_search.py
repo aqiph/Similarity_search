@@ -23,24 +23,26 @@ def run_similarity_search_multiple_query(method = 'fingerprint'):
     input_file_library = 'tests/library.csv'
     # input_file_library = '/Users/guohan/Documents/Projects/Datasets/HTS/Combination/forGNN/HTS_forGNN_446663.csv'
     input_file_query = 'tests/query_cmps.csv'
-    id_column_name_query = 'ID'
-    smiles_column_name_query = 'Cleaned_SMILES'
-
-    output_folder = 'tests/similarity_search_results'
-    output_option = 'satisfied'
+    kwargs = {'id_column_name_query': 'ID',
+              'smiles_column_name_query': 'SMILES',
+              'output_folder': 'similarity_search_results_FP_MolGen',
+              'output_option': 'satisfied'}
 
     ### Method: 'fingerprint' ###
     if method == 'fingerprint':
-        similarity_search_multiple_query(input_file_library, input_file_query, method='fingerprint',
-                                         similarity_cutoff=0.3, output_folder=output_folder, output_option=output_option)
+        kwargs['similarity_cutoff'] = 0.3
+        similarity_search_multiple_query(input_file_library, input_file_query, method='fingerprint', **kwargs)
+
     ### Method: 'mcs' ###
     elif method == 'mcs':
-        similarity_search_multiple_query(input_file_library, input_file_query, method='mcs',
-                                         mcs_match='exact', similarity_cutoff=0.3, output_folder=output_folder, output_option=output_option)
+        kwargs['mcs_match'] = 'exact'
+        kwargs['similarity_cutoff'] = 0.3
+        similarity_search_multiple_query(input_file_library, input_file_query, method='mcs', **kwargs)
+
     ### Method: 'substructure' ###
     elif method == 'substructure':
-        similarity_search_multiple_query(input_file_library, input_file_query, method='substructure',
-                                         substructure_method='SMARTS',output_folder=output_folder, output_option=output_option)
+        kwargs['substructure_method'] = 'SMARTS'
+        similarity_search_multiple_query(input_file_library, input_file_query, method='substructure', **kwargs)
 
 
 def run_select_analogs():
