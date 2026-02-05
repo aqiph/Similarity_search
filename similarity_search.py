@@ -241,8 +241,8 @@ def select_analogs(input_file_query, analogs_dir, analog_method, **kwargs):
 
             if df_selected_analogs.empty:
                 continue
-            df_selected_analogs = pd.DataFrame(df_selected_analogs, columns=['ID', 'SMILES', 'Similarity_Score'])
-            df_selected_analogs.rename(columns={'ID': 'Analog_ID', 'SMILES': 'Analog_SMILES'}, inplace=True)
+            # df_selected_analogs = pd.DataFrame(df_selected_analogs, columns=['ID', 'SMILES', 'Similarity_Score'])
+            df_selected_analogs = df_selected_analogs.rename(columns={'ID': 'Analog_ID', 'SMILES': 'Analog_SMILES'}, inplace=False)
             df_selected_analogs['Query_ID'] = str(id)
             df_selected_analogs['Query_SMILES'] = SMILES_query[i]
             dfs.append(df_selected_analogs)
