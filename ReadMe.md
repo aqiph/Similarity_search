@@ -29,10 +29,10 @@ The script searches `input_file_library` for compounds similar to those in `inpu
    ```
 
    For the two molecules:
-- O=C(NC1(O)C(=O)C2=CC=CC=C2C1=O)C1=CC=C(C(F)(F)F)C=C1 
-- C12(NC(=O)c3ccc(cc3)C)CC3CC(C1)CC(C3)CC2
+   - O=C(NC1(O)C(=O)C2=CC=CC=C2C1=O)C1=CC=C(C(F)(F)F)C=C1 
+   - C12(NC(=O)c3ccc(cc3)C)CC3CC(C1)CC(C3)CC2
 
    RDKit may return the following MCS SMARTS:
-- Cc1ccc(C(=O)NC2CCCCCCCC2)cc1
+   - Cc1ccc(C(=O)NC2CCCCCCCC2)cc1
 
    This result is likely not the intended shared scaffold and may reflect limitations of the MCS settings for complex ring topologies.
