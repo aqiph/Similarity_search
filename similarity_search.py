@@ -353,18 +353,27 @@ if __name__ == '__main__':
     input_file_library = 'tests/library.csv'
     # input_file_library = '/Users/guohan/Documents/Projects/Datasets/HTS/Combination/forGNN/HTS_forGNN_446663.csv'
     input_file_query = 'tests/query_cmps.csv'
-    output_folder = 'tests/similarity_search_results'
-    output_option = 'satisfied'
+    method = 'fingerprint'
+    kwargs = {'id_column_name_query': 'ID',
+              'smiles_column_name_query': 'SMILES',
+              'output_folder': 'similarity_search_results_FP_MolGen',
+              'output_option': 'satisfied'}
 
     ### Method: 'fingerprint' ###
-    # similarity_search_multiple_query(input_file_library, input_file_query, method='fingerprint',
-    #                                  similarity_cutoff=0.3, output_folder=output_folder, output_option=output_option)
+    if method == 'fingerprint':
+        kwargs['similarity_cutoff'] = 0.3
+        similarity_search_multiple_query(input_file_library, input_file_query, method='fingerprint', **kwargs)
+
     ### Method: 'mcs' ###
-    # similarity_search_multiple_query(input_file_library, input_file_query,method='mcs',
-    #                                  mcs_match='exact', similarity_cutoff=0.3, output_folder=output_folder, output_option=output_option)
+    elif method == 'mcs':
+        kwargs['mcs_match'] = 'exact'
+        kwargs['similarity_cutoff'] = 0.3
+        similarity_search_multiple_query(input_file_library, input_file_query, method='mcs', **kwargs)
+
     ### Method: 'substructure' ###
-    similarity_search_multiple_query(input_file_library, input_file_query, method='substructure',
-                                     substructure_method='SMARTS',output_folder=output_folder, output_option=output_option)
+    elif method == 'substructure':
+        kwargs['substructure_method'] = 'SMARTS'
+        similarity_search_multiple_query(input_file_library, input_file_query, method='substructure', **kwargs)
 
 
     ### Select analogs ###
@@ -385,7 +394,7 @@ if __name__ == '__main__':
 
 
     ### Plot similarity score distribution ###
-    # input_file = 'tests/query_cmps_rank1_5.csv'
+    # input_file = 'tests/query_cmps_Top1_12.csv'
     # plot_distribution(input_file)
 
 
