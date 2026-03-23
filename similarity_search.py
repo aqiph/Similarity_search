@@ -350,13 +350,12 @@ def plot_distribution(input_file):
 
 if __name__ == '__main__':
     ### Similarity search for multiple SMILES ###
-    input_file_library = 'tests/library.csv'
-    # input_file_library = '/Users/guohan/Documents/Projects/Datasets/HTS/Combination/forGNN/HTS_forGNN_446663.csv'
-    input_file_query = 'tests/query_cmps.csv'
+    input_file_library = 'examples/library.csv'
+    input_file_query = 'examples/query_cmps.csv'
     method = 'fingerprint'
     kwargs = {'id_column_name_query': 'ID',
               'smiles_column_name_query': 'SMILES',
-              'output_folder': 'similarity_search_results_FP_MolGen',
+              'output_folder': 'examples/similarity_search_results',
               'output_option': 'satisfied'}
 
     ### Method: 'fingerprint' ###
@@ -377,12 +376,12 @@ if __name__ == '__main__':
 
 
     ### Select analogs ###
-    input_file_query = 'tests/query_cmps.csv'
-    analogs_dir = 'tests/similarity_search_results'
+    input_file_query = 'examples/query_cmps.csv'
+    analogs_dir = 'examples/similarity_search_results'
     ### Select analogs above similarity cutoff
-    # analog_method = 'cutoff'
-    # similarity_cutoff = 0.4
-    # select_analogs(input_file_query, analogs_dir, analog_method, similarity_cutoff=similarity_cutoff, deduplication=False)
+    analog_method = 'cutoff'
+    similarity_cutoff = 0.4
+    select_analogs(input_file_query, analogs_dir, analog_method, similarity_cutoff=similarity_cutoff, deduplication=False)
     ### Select the rank-n most similar analog
     # analog_method = 'rank'
     # similarity_rank = 1
@@ -394,7 +393,47 @@ if __name__ == '__main__':
 
 
     ### Plot similarity score distribution ###
-    # input_file = 'tests/query_cmps_Top1_12.csv'
+    # input_file = 'examples/query_cmps_Top1_12.csv'
     # plot_distribution(input_file)
+
+
+
+    ### Tests ###
+    # smiles = 'C1=CC=CC=C1'
+    # smiles_query = 'C1=CC=CC=C1'   # True
+
+    # smiles = 'Clc1ccc(CC)cc1'   # True
+    # smiles = 'Clc1ccc(CC)c(C)c1'   # True
+    # smiles = 'c1ccccc1'   # False
+    # smiles_query = '[*]c1ccc([*])cc1'
+
+    # smiles = 'Clc1c([H])c([H])c(CC)c([H])c1[H]'   # True
+    # smiles = 'Clc1c([H])c([H])c(CC)c(C)c1[H]'   # True
+    # smiles = '[H]c1c([H])c([H])c([H])c([H])c1[H]'   # False
+    # smiles_query = '[*]c1c([H])c([H])c([*])c([H])c1[H]'
+
+    # smiles = 'NCC'   # True
+    # smiles_query = '[*]N'
+
+    # smiles = 'C1CC[NH2+]CC1'   # True
+    # smiles = '[NH3+]CC'   # True
+    # smiles_query = '[*][N+]'
+
+    # smiles = 'O=C(C1=CC(N2CCNCC2)=CC=C1C)NC3(CC3)c4c5ccccc5ccc4'
+    # smiles = 'O=C(C1=CC(N2CCNCC2)=CC=C1C)NCCc3c4ccccc4ccc3'
+
+    # smiles_query = '[*]C1=CC=CC2=C1C=CC=C2'   # False if using kekulized form
+    # smiles_query = '*c1cccc2ccccc12'
+    # smiles_query = '[*]NC([*])=O'
+    # smiles_query = '*NC(*)=O'
+    # smiles_query = 'O=C([*]N)N[*]c1c2ccccc2ccc1'
+
+    # smiles_query = '[*]C(N[*]c(ccc1)c2c1cccc2)=O'   # True
+    # smiles_query = 'O=C(c1cccc(N)c1)N[*]c(ccc2)c3c2cccc3'   # True
+    # smiles_query = 'O=C(c1cccc([*]N)c1)N[*]c(ccc2)c3c2cccc3'
+    # smiles_query = 'c1(cccc2ccccc12)*NC(=O)*'
+
+    # print(is_similar_by_substructure(smiles, smiles_query, substructure_method='SMARTS'))
+
 
 
